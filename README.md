@@ -9,7 +9,7 @@ Ace Figueroa
 
 Cristian Cisneros
 
-Dominuq Martinez
+Dominiq Martinez
 
 Esmerelda Urena
 
