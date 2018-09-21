@@ -5,14 +5,12 @@ CSUSM Fab Friday Fall 2018
 Steve Schlesinger
 
 ## Fab Friday Team Members
-Ace Figueroa
 
-Cristian Cisneros
+Ace Figueroa - Lead QA / Developer
+Ryan Pisuena - PM / D-QA
 
-Dominiq Martinez
+Cristian Cisneros - D-QA
+Esmerelda Urena - D-QA
 
-Esmerelda Urena
-
-Ryan Pisuena
-
-Angela Kim
+Dominiq Martinez - Scribe / D-QA
+Angela Kim - Bugs and Issues / D-QA
