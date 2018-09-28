@@ -10,7 +10,7 @@ Ace Figueroa - Lead QA / Developer
 Ryan Pisuena - PM / D-QA
 
 Cristian Cisneros - D-QA
-Esmerelda Urena - D-QA
+Esmeralda Urena - D-QA
 
 Dominiq Martinez - Scribe / D-QA
 Angela Kim - Bugs and Issues / D-QA
