@@ -116,6 +116,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="bmp.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="bmp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

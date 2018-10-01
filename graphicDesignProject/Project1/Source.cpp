@@ -1,7 +1,17 @@
 #include <iostream>
+#include "bmp.h"
 using namespace std;
 
 int main() {
+	bmp bm;
+
+	//bm.dimensions(100, 100);
+	//bm.calculate_Size();
+
+	bm.writeToFile();
+
+	/*
+
 	const int SIZE = 100;
 	int r[SIZE][SIZE], g[SIZE][SIZE], b[SIZE][SIZE];
 	//This is the red pixel
@@ -32,5 +42,8 @@ int main() {
 		}
 
 	}
+	return 0;
+	*/
+
 	return 0;
 }
