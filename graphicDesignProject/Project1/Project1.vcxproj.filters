@@ -27,4 +27,66 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-4.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-5.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-6.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-7.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-8.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-9.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-10.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-11.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-12.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-12a.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-12b.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-13.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-14LL.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\lyt-8x8-14LR.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-14UL.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-14UR.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-15.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

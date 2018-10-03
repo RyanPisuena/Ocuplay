@@ -1,11 +1,13 @@
 #ifndef _BMP_H_
 #define _BMP_H_
 
+#include <string>
+
 class bmp {
 private:
 	struct BITMAPFILEHEADER{
 		char bfType[2]		= {'B','M' };
-		char bfSize[4]      = {70,0,0,0};
+		char bfSize[4]      = {0,0,0,0};
 		
 		char bfReserved1[2] = { };
 		char bfReserved2[2] = { };
@@ -16,14 +18,14 @@ private:
 	struct BITMAPINFOHEADER {
 		char biSize[4]          = {40,0,0,0};
 
-		char biWidth[4]         = {2,0,0,0};
-		char biHeight[4]        = {2,0,0,0};
+		char biWidth[4]         = {0,char(0x02),0,0};
+		char biHeight[4]        = {0,char(0x02),0,0};
 		
-		char biPlanes[2]        = {1, 00};
+		char biPlanes[2]        = { };
 		char biBitCount[2]      = {24,0};
 		
 		char biCompression[4]   = { };
-		char biSizeImage[4]	    = {16, 0, 0, 0};
+		char biSizeImage[4]	    = { };
 		
 		char biXPelsPerMeter[4] = { };
 		char biYPelsPerMeter[4] = { };
@@ -33,22 +35,17 @@ private:
 	}bmih;
 	
 	struct COLOR{
-		char r = 3;
-		char g = 3;
-		char b = 3;
-	}clr_tlb[2][2];
+		char r = 50;
+		char g = 200;
+		char b = 125;
+	}clr_tlb[512][512];
 public:
 	
 	bmp();
 
 	void writeToFile();
 
-	void dimensions(const int &, const int &);
-	int calculate_Size();
-
-	// Defunct
-	void print_Val();
-
+	void readFromFile(std::string b);
 };
 
 #endif

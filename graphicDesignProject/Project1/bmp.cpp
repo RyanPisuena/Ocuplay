@@ -1,7 +1,8 @@
 #include "bmp.h"
 #include <iostream>
 #include <fstream>
-
+#include <sstream>
+using namespace std;
 bmp::bmp() {
 
 }
@@ -64,41 +65,29 @@ void bmp::writeToFile()
 	for (const char &c : bmih.biClrImportant)
 		fout << c;
 
-	for (int i = 0; i < 2; i++) {
-		for (int j = 0; j < 2; j++) {
-			fout << clr_tlb[i][j].r;
-			fout << clr_tlb[i][j].g;
-			fout << clr_tlb[i][j].b;
+	for (int i = 0; i < 512; i++) {
+		for (int j = 0; j < 512; j++) {
+
+			fout << char(int(clr_tlb[i][j].r)/ ((i % 25)+1));
+			fout << char(int(clr_tlb[i][j].g));
+			fout << char(int(clr_tlb[i][j].b));
 		}
-		fout << char(0);
-		fout << char(0);
 	}
 
 	fout.close();
 }
 
-
-// TODO: Err when hex value < FF
-void bmp::dimensions(const int &x, const int &y)
+void bmp::readFromFile(string b)
 {
-	bmih.biWidth[0] = x;
-	bmih.biHeight[0] = y;
+	//ifstream fin;
+	//fin.open(b);
+	
+//	string s;
+
+	//fin >> s;
+
+//	cout << s << endl;
+
 }
 
-// TODO: Auto Calc size
-int bmp::calculate_Size()
-{
-	bmfh.bfSize[0] = 39;
-	bmfh.bfSize[1] = 70;
 
-	return 0;
-}
-
-void bmp::print_Val()
-{
-	for (char a : bmfh.bfType)
-		std::cout << int(a) << std::endl;
-
-	for (char a : bmih.biSize)
-		std::cout << int(a) << std::endl;
-}

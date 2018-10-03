@@ -1,15 +1,14 @@
 #include <iostream>
+#include <Windows.h>
 #include "bmp.h"
 using namespace std;
 
 int main() {
 	bmp bm;
 
-	//bm.dimensions(100, 100);
-	//bm.calculate_Size();
-
 	bm.writeToFile();
-
+	ShellExecute(NULL, "open", "mspaint", "test.bmp", "", SW_SHOW);
+	bm.readFromFile("hello");
 	/*
 
 	const int SIZE = 100;
