@@ -2,7 +2,28 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <math.h>
 using namespace std;
+
+string bmp::_intToHex(const int &x)
+{
+	stringstream hex;
+	string _hex;
+
+	hex << std::hex << x;
+	_hex = hex.str();
+
+	return _hex;
+}
+
+string bmp::_littleEndian(const string& s)
+{
+	string newS = s;
+
+	reverse(newS.begin(), newS.end());
+	return newS;
+}
+
 bmp::bmp() {
 
 }
@@ -68,7 +89,7 @@ void bmp::writeToFile()
 	for (int i = 0; i < 512; i++) {
 		for (int j = 0; j < 512; j++) {
 
-			fout << char(int(clr_tlb[i][j].r)/ ((i % 25)+1));
+			fout << char(int(clr_tlb[i][j].r) / ((i % 25) + 1));
 			fout << char(int(clr_tlb[i][j].g));
 			fout << char(int(clr_tlb[i][j].b));
 		}
@@ -77,17 +98,27 @@ void bmp::writeToFile()
 	fout.close();
 }
 
-void bmp::readFromFile(string b)
-{
-	//ifstream fin;
-	//fin.open(b);
+
+// TODO: Error check negatives
+// TODO: check range [0 -]
+void bmp::width(const int &x)
+{/*
+	string s = bmp::_littleEndian(bmp::_intToHex(x));
 	
-//	string s;
+	if(s.length() % 2)
+		s.append("0");
 
-	//fin >> s;
+	cout << s << endl;
 
-//	cout << s << endl;
-
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; i < 2; j++) {
+		
+		}
+	}
+*/
 }
 
+void bmp::height(const int &y)
+{
 
+}
