@@ -1,3 +1,4 @@
 ﻿  main.cpp
 c:\users\benfig\documents\github\graphicdesignproject\graphicdesignproject\project1\bmp.h(44): warning C4309: 'initializing': truncation of constant value
+  LINK : C:\Users\benfig\Documents\GitHub\graphicDesignProject\graphicDesignProject\Debug\Project1.exe not found or not built by the last incremental link; performing full link
   Project1.vcxproj -> C:\Users\benfig\Documents\GitHub\graphicDesignProject\graphicDesignProject\Debug\Project1.exe

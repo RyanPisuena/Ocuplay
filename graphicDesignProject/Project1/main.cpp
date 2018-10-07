@@ -6,7 +6,7 @@ using namespace std;
 int main() {
 	bmp bm;
 
-	bm.setSize(102, 105);
+	bm.setSize(134, 105);
 
 	bm.writeToFile();
 
