@@ -33,6 +33,6 @@
 
 # Visual Studios Files
 *.sln
-graphicDesignProject/.vs/
-graphicDesignProject/debug/
-graphicDesignProject/Project1/Debug/
+/graphicDesignProject/.vs/
+/graphicDesignProject/debug/
+/graphicDesignProject/Project1/Debug/
