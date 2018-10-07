@@ -19,8 +19,8 @@ private:
 		char biSize[4]          = {40,0,0,0};
 
 		// Data is stored in little-endian format
-		char biWidth[4]         = {0,0x02,0,0};
-		char biHeight[4]        = {0,0x02,0,0};
+		char biWidth[4]         = { };
+		char biHeight[4]        = { };
 		
 		char biPlanes[2]        = { };
 
@@ -38,7 +38,7 @@ private:
 	}bmih;
 	
 	// TODO: Set on heap or convert to pointer
-	// replace with vector
+	// TODO: find better 
 	struct COLOR{
 		char r = 50;
 		char g = 200;
@@ -48,16 +48,22 @@ private:
 	clr_tlb[512][512];
 
 	string _intToHex(const int&);
-	string _littleEndian(const string&);
 
 public:
 	
 	bmp();
 
+	// Creates BMP file
 	void writeToFile();
 
+	// Intializes BMP pixel width
 	void width(const int &);
+
+	// Initializes BMP pixel height
 	void height(const int &);
+
+	// Initializes both pixel width and pixel height of BMP file
+	void setSize(const int &, const int &);
 
 };
 

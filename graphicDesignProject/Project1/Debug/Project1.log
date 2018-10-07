@@ -1,6 +1,8 @@
-﻿  Source.cpp
-c:\users\acegf\documents\github\graphicdesignproject\graphicdesignproject\project1\bmp.h(42): warning C4309: 'initializing': truncation of constant value
-  bmp.cpp
-c:\users\acegf\documents\github\graphicdesignproject\graphicdesignproject\project1\bmp.h(42): warning C4309: 'initializing': truncation of constant value
+﻿  bmp.cpp
+c:\users\benfig\documents\github\graphicdesignproject\graphicdesignproject\project1\bmp.h(44): warning C4309: 'initializing': truncation of constant value
+c:\users\benfig\documents\github\graphicdesignproject\graphicdesignproject\project1\bmp.cpp(128): warning C4244: '=': conversion from 'unsigned long' to 'char', possible loss of data
+c:\users\benfig\documents\github\graphicdesignproject\graphicdesignproject\project1\bmp.cpp(150): warning C4244: '=': conversion from 'unsigned long' to 'char', possible loss of data
+  main.cpp
+c:\users\benfig\documents\github\graphicdesignproject\graphicdesignproject\project1\bmp.h(44): warning C4309: 'initializing': truncation of constant value
   Generating Code...
-  Project1.vcxproj -> C:\Users\acegf\Documents\GitHub\graphicDesignProject\graphicDesignProject\Debug\Project1.exe
+  Project1.vcxproj -> C:\Users\benfig\Documents\GitHub\graphicDesignProject\graphicDesignProject\Debug\Project1.exe

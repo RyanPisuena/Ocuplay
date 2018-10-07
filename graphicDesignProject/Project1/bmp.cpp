@@ -10,18 +10,17 @@ string bmp::_intToHex(const int &x)
 	stringstream hex;
 	string _hex;
 
+	// Using stringstream to convert int -> hex
 	hex << std::hex << x;
+
+	// Store stringstream as string
 	_hex = hex.str();
 
+	// Appends a zero to the end
+	if (_hex.length() % 2)
+		_hex.append("0");
+
 	return _hex;
-}
-
-string bmp::_littleEndian(const string& s)
-{
-	string newS = s;
-
-	reverse(newS.begin(), newS.end());
-	return newS;
 }
 
 bmp::bmp() {
@@ -101,24 +100,60 @@ void bmp::writeToFile()
 
 // TODO: Error check negatives
 // TODO: check range [0 -]
+
+// Sets pixel width of BMP image
+// Store least significant digits first (Little endian)
 void bmp::width(const int &x)
-{/*
-	string s = bmp::_littleEndian(bmp::_intToHex(x));
+{
+	string s = bmp::_intToHex(x);
+	string newS;
+
+	int length = s.length() / 2;
 	
-	if(s.length() % 2)
-		s.append("0");
+	for (int i = 0; i < length; i++) {
 
-	cout << s << endl;
+		newS = "0x";
 
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; i < 2; j++) {
-		
+		for (int j = 0; j < 2; j++) {
+			// Appends char from string 's' last char
+			newS += s.back();
+
+			// Removes 's' last char
+			s.pop_back();
 		}
+		
+		// Converts hex to unsigned long
+		bmih.biWidth[i] = stoul(newS, nullptr, 16);
 	}
-*/
 }
 
+// Sets pixel height of BMP image
+// Store least significant digits first (Little endian)
 void bmp::height(const int &y)
 {
+	string s = bmp::_intToHex(x);
+	string newS;
 
+	int length = s.length() / 2;
+
+	for (int i = 0; i < length; i++) {
+
+		newS = "0x";
+
+		for (int j = 0; j < 2; j++) {
+			// Appends char from string 's' last char
+			newS += s.back();
+
+			// Removes 's' last char
+			s.pop_back();
+		}
+
+		bmih.biHeight[i] = stoul(newS, nullptr, 16);
+	}
+}
+
+void bmp::setSize(const int &x, const int &y)
+{
+	bmp::width(x);
+	bmp::height(y);
 }

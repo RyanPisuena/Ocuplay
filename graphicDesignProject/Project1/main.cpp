@@ -6,12 +6,12 @@ using namespace std;
 int main() {
 	bmp bm;
 
-	bm.width(512);
+	bm.setSize(512, 512);
 
 	bm.writeToFile();
 
 	// TODO: Add cross-platform support
-	//ShellExecute(NULL, "open", "mspaint", "test.bmp", "", SW_SHOW);
+	ShellExecute(NULL, "open", "mspaint", "test.bmp", "", SW_SHOW);
 
 	return 0;
 }
