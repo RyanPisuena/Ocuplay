@@ -13,14 +13,14 @@ private:
 		char bfReserved2[2] = { };
 		
 		char bfOffBits[4]   = {54,0,0,0};
-	}bmfh;
+	}_bmfh;
 
 	struct BITMAPINFOHEADER {
 		char biSize[4]          = {40,0,0,0};
 
 		// Data is stored in little-endian format
-		char biWidth[4]         = { };
-		char biHeight[4]        = { };
+		char biWidth[4]         = {0x64, 0, 0, 0};
+		char biHeight[4]        = {0x64, 0, 0, 0};
 		
 		char biPlanes[2]        = { };
 
@@ -35,7 +35,7 @@ private:
 		
 		char biClrUsed[4]	    = { };
 		char biClrImportant[4]  = { };
-	}bmih;
+	}_bmih;
 	
 	// TODO: Set on heap or convert to pointer
 	// TODO: find better 
@@ -45,7 +45,10 @@ private:
 		char b = 125;
 	}
 	
-	clr_tlb[512][512];
+	_clr_tlb[512][512];
+
+	int _width;
+	int _height;
 
 	string _intToHex(const int&);
 
