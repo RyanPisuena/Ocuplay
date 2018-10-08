@@ -29,7 +29,12 @@ string bmp::_intToHex(const int &x)
 }
 
 bmp::bmp() {
+	p = nullptr;
+}
 
+bmp::~bmp() {
+	delete[] p;
+	p = nullptr;
 }
 
 void bmp::writeToFile()
@@ -93,7 +98,7 @@ void bmp::writeToFile()
 	for (int i = 0; i < _height; i++) {
 		for(int j = 0; j < _width; j++) {
 
-			fout << char(int(_clr_tlb[i][j].r) /*/ ((i % 25) + 1)*/);
+			fout << char(int(_clr_tlb[i][j].r) / ((i % 25) + 1));
 			fout << char(int(_clr_tlb[i][j].g));
 			fout << char(int(_clr_tlb[i][j].b));
 		}
@@ -107,8 +112,7 @@ void bmp::writeToFile()
 }
 
 
-// TODO: Error check negatives
-// TODO: check range [0 -]
+// TODO: Input validation
 
 // Sets pixel width of BMP image
 // Store least significant digits first (Little endian)
@@ -170,6 +174,17 @@ void bmp::height(const int &y)
 
 void bmp::setSize(const int &x, const int &y)
 {
+	// TODO: Redo clr table data structure
+	/*
+	p = new COLOR[x * y];
+
+	for (int i = 0; i < (x * y); i++) {
+		p[i].r = 30;
+		p[i].g = 70;
+		p[i].b = 80;
+	}
+	*/
+
 	bmp::width(x);
 	bmp::height(y);
 }

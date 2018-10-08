@@ -43,9 +43,7 @@ private:
 		char r = 50;
 		char g = 200;
 		char b = 125;
-	}
-	
-	_clr_tlb[512][512];
+	}_clr_tlb[512][512], *p;
 
 	int _width;
 	int _height;
@@ -55,6 +53,7 @@ private:
 public:
 	
 	bmp();
+	~bmp();
 
 	// Creates BMP file
 	void writeToFile();
