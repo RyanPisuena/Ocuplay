@@ -115,11 +115,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Layouts.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="bmp.cpp" />
+    <ClCompile Include="Bmp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bmp.h" />
+    <ClInclude Include="Layouts.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\..\Desktop\2018-10-2-BMP\bmp\Lyt-8x8-1.bmp" />

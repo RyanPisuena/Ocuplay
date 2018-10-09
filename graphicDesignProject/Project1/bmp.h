@@ -38,7 +38,6 @@ private:
 	}_bmih;
 	
 	// TODO: Set on heap or convert to pointer
-	// TODO: find better 
 	struct COLOR{
 		char r = 50;
 		char g = 200;

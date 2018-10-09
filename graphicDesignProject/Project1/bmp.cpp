@@ -95,7 +95,31 @@ void bmp::writeToFile()
 	for (const char &c : _bmih.biClrImportant)
 		fout << c;
 
+	// THIRD ALGO
+	/*
 	for (int i = 0; i < _height; i++) {
+		
+		 for (int j = 0; j < _width; j++) {
+			fout << p[(i * _width) + j].r;
+			fout << p[(i * _width) + j].g;
+			fout << p[(i * _width) + j].b;
+		}
+
+		 // Padding
+		for (int j = 0; j < ((_width * 3) % 4); j++)
+			fout << 0x00;
+	}
+	*/
+		/*
+		// SECOND ALGO
+		for (int i = 0; i < _height*_width; i++) {
+			fout << p[i].r;
+			fout << p[i].g;
+			fout << p[i].b;
+			*/
+	
+		// FIRST ALGO
+	for(int i = 0; i < _height; i++) {
 		for(int j = 0; j < _width; j++) {
 
 			fout << char(int(_clr_tlb[i][j].r) / ((i % 25) + 1));
@@ -106,6 +130,7 @@ void bmp::writeToFile()
 		for (int j = 0; j < ((_width * 3) % 4); j++) {
 			fout << 0x00;
 		}
+	
 	}
 
 	fout.close();
@@ -175,9 +200,10 @@ void bmp::height(const int &y)
 void bmp::setSize(const int &x, const int &y)
 {
 	// TODO: Redo clr table data structure
+	
 	/*
 	p = new COLOR[x * y];
-
+	
 	for (int i = 0; i < (x * y); i++) {
 		p[i].r = 30;
 		p[i].g = 70;
