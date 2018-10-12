@@ -8,7 +8,7 @@ int main() {
 
 	// ERROR
 //	bm.setSize(363, 229);
-	
+
 	bm.setSize(363, 229);
 
 //	bm.setSize(200, 500);
