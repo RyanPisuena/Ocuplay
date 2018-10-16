@@ -10,7 +10,7 @@ Layouts::~Layouts()
 
 }
 
-void Layouts::readLayout(long fileNum, int w, int h, int r, int X1, int Y1, int X2, int Y2)
+void Layouts::readLayout(long fileNum, int Width, int Height, int Rectangles, int X1, int Y1, int X2, int Y2)
 {
     ifstream fin;
 
@@ -28,20 +28,26 @@ cin >> filename;
 
     if (fileNum = 13572468)
 {
-    fin >> w;
-    fin >> h;
-    fin >> r;
+    fin >> Width;
+    fin >> Height;
+    fin >> Rectangles;
+}
 
-    for(int i=0; i < r, i++)
+vector<int>Coordinates; //creates vector called "Coordinates"
+
+    for(int i=0; i < Rectangles; i++)
     {
         fin >> X1;
         fin >> Y1;
         fin >> X2;
         fin >> Y2;
 
-        if (X1 > w || Y1 > w || X2 > w || Y2 > w || X1 > h || Y1 > h || X2 > h || Y2 > h)
+        if (X1 > Width || Y1 > Width || X2 > Width || Y2 > Width || X1 > Height || Y1 > Height || X2 > Height || Y2 > h)
 
         cout << "Coordinates are not within range. " << endl;
+    
+    
+    
     }
 }
 else
