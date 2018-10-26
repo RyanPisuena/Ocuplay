@@ -1,0 +1,9 @@
+﻿  Moc'ing MainWindow.h...
+  Rcc'ing MainWindow.qrc...
+  Uic'ing MainWindow.ui...
+  RCC: Warning: No resources in 'C:\Users\acegf\Documents\GitHub\graphicDesignProject\CG_Art\GraphicDesignProject\MainWindow.qrc'.
+  main.cpp
+  MainWindow.cpp
+  moc_MainWindow.cpp
+  qrc_MainWindow.cpp
+  GraphicDesignProject.vcxproj -> C:\Users\acegf\Documents\GitHub\graphicDesignProject\CG_Art\x64\Debug\GraphicDesignProject.exe
