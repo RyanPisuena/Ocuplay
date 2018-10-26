@@ -1,4 +1,8 @@
 #include "Layouts.h"
+#include <iostream>
+#include <fstream>
+
+using namespace std;
 
 Layouts::Layouts()
 {
@@ -7,6 +11,7 @@ Layouts::Layouts()
 Layouts::~Layouts()
 {
 }
+
 
 void Layouts::readLayout(long fileNum, int Width, int Height, int Rectangles, Coordinates X1, Coordinates Y1, Coordinates X2, Coordinates Y2)
 {
@@ -18,6 +23,7 @@ void Layouts::readLayout(long fileNum, int Width, int Height, int Rectangles, Co
 
     ofstream fout; //output file stream name
 
+
     string filename; //filename inputed by user
 
 cout << "Enter the filename: " << endl;
@@ -25,6 +31,7 @@ cout << "Enter the filename: " << endl;
 cin >> filename;
 
     fin.open(filename);
+
 
 while (fin >> fileNum)
 {
@@ -35,7 +42,29 @@ while (fin >> fileNum)
         fin >> Rectangles;
     }
 
+
+    fin >> fileNum;
+
+    if (fileNum = 13572468)
+    { // if fileNum
+    fin >> w;
+    fin >> h;
+    fin >> r;
+
+    for(int i=0; i < r; i++)
+        {
+        fin >> X1;
+        fin >> Y1;
+        fin >> X2;
+        fin >> Y2;
+
+        if (X1 > w || Y1 > w || X2 > w || Y2 > w || X1 > h || Y1 > h || X2 > h || Y2 > h)
+        cout << "Coordinates are not within range. " << endl;
+    }
+} // if FileNum
+
 else
+cout << "The file is not valid" << endl;
 
 cout << "File number not valid." << endl;
 
@@ -55,3 +84,6 @@ cout << "File number not valid." << endl;
         cout << "Invalid coordinates." << endl;
     }
 }
+
+}
+

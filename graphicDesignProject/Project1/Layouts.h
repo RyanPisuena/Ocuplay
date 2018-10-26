@@ -15,14 +15,11 @@ struct Coordinates
 class Layouts
 {
 private:
-
 long fileNo; //file's "magic number"
-
 int width;
-
 int height;
-
 int rectangles; //number of rectangles
+
 
 Coordinates x1; //x coordinate 1
 
