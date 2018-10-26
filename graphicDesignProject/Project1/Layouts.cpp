@@ -2,21 +2,23 @@
 
 Layouts::Layouts()
 {
-
 }
 
 Layouts::~Layouts()
 {
-
 }
 
-void Layouts::readLayout(long fileNum, int Width, int Height, int Rectangles, int X1, int Y1, int X2, int Y2)
+void Layouts::readLayout(long fileNum, int Width, int Height, int Rectangles, Coordinates X1, Coordinates Y1, Coordinates X2, Coordinates Y2)
 {
-    ifstream fin;
+    vector<Coordinates>VecCoordinates; //vector of coordinates in groups of 4
 
-    ofstream fout;
+    Coordinates temp; //copies struct Coordinates into temp
 
-    string filename;
+    ifstream fin; //input file stream name
+
+    ofstream fout; //output file stream name
+
+    string filename; //filename inputed by user
 
 cout << "Enter the filename: " << endl;
 
@@ -24,33 +26,32 @@ cin >> filename;
 
     fin.open(filename);
 
-    fin >> fileNum;
-
-    if (fileNum = 13572468)
+while (fin >> fileNum)
 {
-    fin >> Width;
-    fin >> Height;
-    fin >> Rectangles;
-}
-
-vector<int>Coordinates; //creates vector called "Coordinates"
-
-    for(int i=0; i < Rectangles; i++)
+    if (fileNum = 13572468)
     {
-        fin >> X1;
-        fin >> Y1;
-        fin >> X2;
-        fin >> Y2;
-
-        if (X1 > Width || Y1 > Width || X2 > Width || Y2 > Width || X1 > Height || Y1 > Height || X2 > Height || Y2 > h)
-
-        cout << "Coordinates are not within range. " << endl;
-    
-    
-    
+        fin >> Width;
+        fin >> Height;
+        fin >> Rectangles;
     }
-}
+
 else
 
-cout << "The file is not valid"
+cout << "File number not valid." << endl;
+
+    for (int i = 0; i < rectangles; i++)
+    {
+        fin >> temp.X1;
+        VecCoordinates.push_back(temp.X1);
+        fin >> temp.Y1;
+        VecCoordinates.push_back(temp.Y1);
+        fin >> temp.X2;
+        VecCoordinates.push_back(temp.X2);
+        fin >> temp.Y2;
+        VecCoordinates.push_back(temp.Y2);
+
+        if (VecCoordinates[i] > height || VecCoordinates[i] > width)
+
+        cout << "Invalid coordinates." << endl;
+    }
 }
