@@ -13,4 +13,4 @@ Cristian Cisneros - D-QA
 Esmerelda Urena - D-QA
 
 Dominiq Martinez - Scribe / D-QA
-Angela Kim - Bugs and Issues / D-QA
+
