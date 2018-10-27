@@ -1,4 +1,4 @@
-# graphicDesignProject
+# OcuPlay
 CSUSM Fab Friday Fall 2018
 
 ## Project Supervisor
