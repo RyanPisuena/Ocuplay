@@ -35,6 +35,9 @@ public:
 	Layouts();
 	~Layouts();
 	void readLayout(long fileNum, int Width, int Height, int Rectangles, Coordinates X1, Coordinates Y1, Coordinates X2, Coordinates Y2);
+
+	void createLayoutImg();
+
 };
 
 #endif

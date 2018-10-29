@@ -1,5 +1,13 @@
 #include "Layouts.h"
 
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <vector>
+
+#include <Magick++.h>
+using namespace std;
+
 Layouts::Layouts()
 {
 }
@@ -23,6 +31,7 @@ void Layouts::readLayout(long fileNum, int Width, int Height, int Rectangles, Co
   cout << "Enter the filename: " << endl;
 
   cin >> filename;
+
 
   fin.open(filename.data());
 
@@ -56,3 +65,15 @@ void Layouts::readLayout(long fileNum, int Width, int Height, int Rectangles, Co
         }
     }
 }
+
+void Layouts::createLayoutImg() {
+	Magick::Image img(Magick::Geometry(300, 300), Magick::Color("red"));
+	
+	for (int i = 0; i < 300; i += 10) {
+		img.draw(Magick::DrawableLine(i, 0, i, 300));
+		cout << i << endl;
+	}
+
+	img.write("img.bmp");
+}
+
