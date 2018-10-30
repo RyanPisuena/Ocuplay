@@ -2,36 +2,43 @@
 #define _LAYOUTS_H_
 
 #include <list>
+#include <string>
 
-struct LayoutCoords {
-	struct Coordinates
-	{
-		int x1;
-		int y1;
-	}a, b;
+struct Coordinates
+{
+	unsigned long int x;
+	unsigned long int y;
+};
+
+struct LayoutCoords 
+{
+	Coordinates begin;
+	Coordinates end;
 };
 
 class Layouts
 {
 private:
-	long fileNo; //file's "magic number"
+	// Width of image in pixels
+	unsigned int width;
 
-	int width;
+	// Height of image in pixels
+	unsigned int height;
 
-	int height;
+	// Number of microLayouts
+	unsigned int microLayouts;
 
-	int rectangles; //number of rectangles
-
-	list<LayoutCoords> CoordinateList;
+	std::list<LayoutCoords> CoordinateList;
 
 public:
+	static unsigned int fileNo;
+
 	Layouts();
 	~Layouts();
-	void readLayout(long fileNum, int Width, int Height, int Rectangles, Coordinates X1, Coordinates Y1, Coordinates X2, Coordinates Y2);
+	
+	void readLayout(const std::string& fileName);
 
 	void createLayoutImg();
-
-
 };
 
 #endif

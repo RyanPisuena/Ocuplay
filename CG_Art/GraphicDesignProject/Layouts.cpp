@@ -1,79 +1,119 @@
 #include "Layouts.h"
 
-#include <string>
 #include <iostream>
+#include <sstream>
 #include <fstream>
-#include <vector>
+
+#include <regex>
 
 #include <Magick++.h>
 using namespace std;
 
+unsigned int Layouts::fileNo = 13572468;
+
 Layouts::Layouts()
 {
+	width = 0;
+	height = 0;
+	
+	microLayouts = 0;
 }
 
 Layouts::~Layouts()
 {
+
 }
 
-void Layouts::readLayout(long fileNum, int Width, int Height, int Rectangles, Coordinates X1, Coordinates Y1, Coordinates X2, Coordinates Y2)
-{
-  vector<Coordinates>VecCoordinates; //vector of coordinates in groups of 4                                                                            
+// Reads a current saved layout
+void Layouts::readLayout(const string &fileName)
+{                                                                                                                                                                                                                                                                     
+	ifstream inputFile(fileName);
 
-  Coordinates temp; //copies struct Coordinates into temp                                                                                              
+	if (!inputFile) 
+	{
 
-  ifstream fin; //input file stream name                                                                                                               
+	}
+	else
+	{
+		stringstream stream;
+		string temp;
+		// Reads formatted inputfile
+		while (getline(inputFile, temp))
+			stream << temp << endl;
 
-  ofstream fout; //output file stream name                                                                                                             
+		// Removes comments in file.
+		// A valid comment must start on a newline with a '#'.
+		// The whole line is then ignored.
+		regex pattern("(^#)(.+)(\n)");
+		stream.str(regex_replace(stream.str(), pattern, ""));
 
-  string filename; //filename inputed by user                                                                                                          
+		unsigned int data;
+		stream >> std::dec >> data;
+		if (data == Layouts::fileNo)
+		{
+			unsigned int width;
+			unsigned int height;
+			unsigned int microLayouts;
 
-  cout << "Enter the filename: " << endl;
+			// Get width, height and microLayouts
+			stream >> width >> height >> microLayouts;
+		
+			// Store width, height and microLayouts to object
+			Layouts::width = width; 
+			Layouts::height = height; 
+			Layouts::microLayouts = microLayouts;
 
-  cin >> filename;
+			unsigned int point_x;
+			unsigned int point_y;
+			unsigned int _point_x;
+			unsigned int _point_y;
 
+			// Store layout position
+			while (stream >> point_x >> point_y >> _point_x >> _point_y)
+			{
+				Coordinates begin;
+				Coordinates end;
+				
+				LayoutCoords pair;
 
-  fin.open(filename.data());
+				begin.x = point_x;
+				begin.y = point_y;
 
-  while (fin >> fileNum)
-    {
-      if (fileNum = 13572468)
-        {
-          fin >> Width;
-          fin >> Height;
-          fin >> Rectangles;
-        }
+				end.x = _point_x;
+				end.y = _point_y;
 
-      else
+				pair.begin = begin;
+				pair.end = end;
 
-        cout << "File number not valid." << endl;
+				// Push Layout position in list
+				Layouts::CoordinateList.push_back(pair);
+				cout << Layouts::CoordinateList.size() << endl;
+			}
 
-      for (int i = 0; i < rectangles; i++)
-        {
-          fin >> temp.x1;
-          VecCoordinates.push_back(x1);
-          fin >> temp.y1;
-          VecCoordinates.push_back(y1);
-          fin >> temp.x2;
-          VecCoordinates.push_back(x2);
-          fin >> temp.y2;
-          VecCoordinates.push_back(y2);
-
-          if (VecCoordinates[i].x1 > height || VecCoordinates[i].y1 > width)
-
-            cout << "Invalid coordinates." << endl;
-        }
-    }
-}
-
-void Layouts::createLayoutImg() {
-	Magick::Image img(Magick::Geometry(300, 300), Magick::Color("red"));
-	
-	for (int i = 0; i < 300; i += 10) {
-		img.draw(Magick::DrawableLine(i, 0, i, 300));
-		cout << i << endl;
+		}
 	}
 
-	img.write("img.bmp");
+	// Close file after all operations are done.
+	inputFile.close();
 }
 
+// Creates a visual layout
+void Layouts::createLayoutImg() {
+
+	// !--PLACE HOLDER--!
+	// Will change soon
+	double px = 1000.0;
+
+	// Initialize image object with size px, and background color of red
+	Magick::Image img(Magick::Geometry(px, px), Magick::Color("red"));
+
+	// Draws the microLayouts
+	for (double i = 0.0; i < px; i += (px/Layouts::width))
+		img.draw(Magick::DrawableLine(i, 0.0, i, px));
+
+	for (double i = 0.0; i < px; i += (px /Layouts::height))
+		img.draw(Magick::DrawableLine(0.0, i, px, i));
+
+	// Saves file as .bmp
+	img.write("img.bmp");
+}
