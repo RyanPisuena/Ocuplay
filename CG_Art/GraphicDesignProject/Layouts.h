@@ -1,35 +1,28 @@
 #ifndef _LAYOUTS_H_
 #define _LAYOUTS_H_
 
-struct Coordinates
-{
-	int x1;
+#include <list>
 
-	int y1;
-
-	int x2;
-
-	int y2;
+struct LayoutCoords {
+	struct Coordinates
+	{
+		int x1;
+		int y1;
+	}a, b;
 };
 
 class Layouts
 {
 private:
-long fileNo; //file's "magic number"
+	long fileNo; //file's "magic number"
 
-int width;
+	int width;
 
-int height;
+	int height;
 
-int rectangles; //number of rectangles
+	int rectangles; //number of rectangles
 
-Coordinates x1; //x coordinate 1
-
-Coordinates y1; //y coordinate 1
-
-Coordinates x2; //x coordinate 2
-
-Coordinates y2; //y coordinate 2
+	list<LayoutCoords> CoordinateList;
 
 public:
 	Layouts();
@@ -37,6 +30,7 @@ public:
 	void readLayout(long fileNum, int Width, int Height, int Rectangles, Coordinates X1, Coordinates Y1, Coordinates X2, Coordinates Y2);
 
 	void createLayoutImg();
+
 
 };
 
