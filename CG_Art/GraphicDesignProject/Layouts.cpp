@@ -1,3 +1,9 @@
+﻿/*
+LAYOUTS
+LAST EDITED: 10/31/2018
+CONTRIBUTORS: CRISTIAN C., DOMINQUE M., GABRIEL F.
+PURPOSE: FILE IS TO CONTAIN LAYOUTS FOR DRAWING.
+*/
 #include "Layouts.h"
 
 #include <iostream>
@@ -5,18 +11,30 @@
 #include <fstream>
 
 #include <regex>
+#include <random>
 
 #include <Magick++.h>
-using namespace std;
 
-unsigned int Layouts::fileNo = 13572468;
+unsigned const int Layouts::fileNo = 13572468;
+
+// DO NOT TOUCH
+// RANDOM!
+// https://stackoverflow.com/questions/18726102/what-difference-between-rand-and-random-functions
+std::random_device r;
+std::seed_seq seed{ r(), r(), r(), r(), r(), r(), r(), r()};
+std::mt19937 eng{ seed };
+std::uniform_int_distribution<> dist(0, 65535.);
+
+// TODO LIST
+// Clear/flush function
+// Clean up variables
 
 Layouts::Layouts()
 {
 	width = 0;
 	height = 0;
 	
-	microLayouts = 0;
+	numOfLayouts = 0;
 }
 
 Layouts::~Layouts()
@@ -25,26 +43,26 @@ Layouts::~Layouts()
 }
 
 // Reads a current saved layout
-void Layouts::readLayout(const string &fileName)
+void Layouts::readLayout(const std::string &fileName)
 {                                                                                                                                                                                                                                                                     
-	ifstream inputFile(fileName);
+	std::ifstream inputFile(fileName);
 
 	if (!inputFile) 
 	{
-
+		// TODO: ERROR MSG
 	}
 	else
 	{
-		stringstream stream;
-		string temp;
+		std::stringstream stream;
+		std::string temp;
 		// Reads formatted inputfile
 		while (getline(inputFile, temp))
-			stream << temp << endl;
+			stream << temp << std::endl;
 
 		// Removes comments in file.
 		// A valid comment must start on a newline with a '#'.
 		// The whole line is then ignored.
-		regex pattern("(^#)(.+)(\n)");
+		std::regex pattern("(^#)(.+)(\n)");
 		stream.str(regex_replace(stream.str(), pattern, ""));
 
 		unsigned int data;
@@ -53,15 +71,15 @@ void Layouts::readLayout(const string &fileName)
 		{
 			unsigned int width;
 			unsigned int height;
-			unsigned int microLayouts;
+			unsigned int numOfLayouts;
 
-			// Get width, height and microLayouts
-			stream >> width >> height >> microLayouts;
+			// Get width, height and numOfLayouts
+			stream >> width >> height >> numOfLayouts;
 		
-			// Store width, height and microLayouts to object
+			// Store width, height and numOfLayouts to object
 			Layouts::width = width; 
 			Layouts::height = height; 
-			Layouts::microLayouts = microLayouts;
+			Layouts::numOfLayouts = numOfLayouts;
 
 			unsigned int point_x;
 			unsigned int point_y;
@@ -87,9 +105,12 @@ void Layouts::readLayout(const string &fileName)
 
 				// Push Layout position in list
 				Layouts::CoordinateList.push_back(pair);
-				cout << Layouts::CoordinateList.size() << endl;
 			}
 
+		} 
+		else
+		{
+			// TODO: ERROR MSG
 		}
 	}
 
@@ -98,25 +119,47 @@ void Layouts::readLayout(const string &fileName)
 }
 
 // Creates a visual layout
-void Layouts::createLayoutImg() {
+void Layouts::createLayoutImg(const std::string& s) {
 
 	// !--PLACE HOLDER--!
 	// Will change soon
 	double px = 1000.0;
-	Magick::Color clr1(0.0, 0.0, 65535.0, 65535.0 * 0.5);
-	Magick::Color clr(0, 0, 65535);
 
 	// Initialize image object with size px, and background color of red
 	Magick::Image base(Magick::Geometry(px, px), Magick::Color("red")),
-		mask(Magick::Geometry(500.0, 500.0), clr1);
+		mask(Magick::Geometry(px, px), Magick::Color(0.0,0.0,0.0,0.0));
 
-	// Draws the microLayouts
+	// Create a list of Drawable elements
+	Magick::DrawableList elements;
+
+	// Pushes drawables to elements
 	for (double i = 0.0; i < px; i += (px / Layouts::width))
-		base.draw(Magick::DrawableLine(i, 0.0, i, px));
-
+		elements.push_back(Magick::DrawableLine(i, 0.0, i, px));
 
 	for (double i = 0.0; i < px; i += (px /Layouts::height))
-		base.draw(Magick::DrawableLine(0.0, i, px, i));
+		elements.push_back(Magick::DrawableLine(0.0, i, px, i));
+
+	// Draws elements
+	base.draw(elements);
+
+	// Create a list of drawable layouts
+	// This will be for the mask.
+	// !-- Consider using one Magick::Image object instead of one --!
+	Magick::DrawableList layouts;
+
+	for (const LayoutCoords &s : Layouts::CoordinateList) 
+	{
+		// Randomnizes color layouts
+		layouts.push_back(Magick::DrawableFillColor(Magick::Color(dist(eng), dist(eng), dist(eng), 65535 * 0.7)));
+
+		// Pushes layout to drawable list
+		layouts.push_back(Magick::DrawableRectangle((s.begin.x) * (px / Layouts::width), 
+													(s.begin.y) * (px / Layouts::height),
+													(s.end.x + 1) * (px / Layouts::width),
+													(s.end.y + 1) * (px / Layouts::height)));
+	}
+	// Draw layouts
+	mask.draw(layouts);
 
 	// Adds alpha mask 
 	mask.alpha(true);
@@ -125,5 +168,5 @@ void Layouts::createLayoutImg() {
 	base.composite(mask, 0.0, 0.0, Magick::OverCompositeOp);
 
 	// Save as img0.png
-	base.write("img0.png");
+	base.write(s);
 }

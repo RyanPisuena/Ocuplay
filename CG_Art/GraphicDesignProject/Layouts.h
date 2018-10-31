@@ -19,26 +19,26 @@ struct LayoutCoords
 class Layouts
 {
 private:
-	// Width of image in pixels
+	// number of horizontal lines
 	unsigned int width;
 
-	// Height of image in pixels
+	// number of vertical lines
 	unsigned int height;
 
-	// Number of microLayouts
-	unsigned int microLayouts;
+	// Number of numOfLayouts
+	unsigned int numOfLayouts;
 
 	std::list<LayoutCoords> CoordinateList;
 
 public:
-	static unsigned int fileNo;
+	static const unsigned int fileNo;
 
 	Layouts();
 	~Layouts();
 	
 	void readLayout(const std::string& fileName);
 
-	void createLayoutImg();
+	void createLayoutImg(const std::string& = "img0.png");
 };
 
 #endif
