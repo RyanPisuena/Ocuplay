@@ -6,8 +6,8 @@
 
 struct Coordinates
 {
-	unsigned long int x;
-	unsigned long int y;
+	std::size_t x;
+	std::size_t y;
 };
 
 struct LayoutCoords 
@@ -19,14 +19,20 @@ struct LayoutCoords
 class Layouts
 {
 private:
-	// number of horizontal lines
-	unsigned int width;
+	// Cell height
+	float cellHeight;
 
-	// number of vertical lines
-	unsigned int height;
+	// Cell width
+	float cellWidth;
+
+	// Number of horizontal lines
+	std::size_t cellsHorizontal;
+
+	// Number of vertical lines
+	std::size_t cellsVertical;
 
 	// Number of numOfLayouts
-	unsigned int numOfLayouts;
+	std::size_t numOfLayouts;
 
 	std::list<LayoutCoords> CoordinateList;
 
