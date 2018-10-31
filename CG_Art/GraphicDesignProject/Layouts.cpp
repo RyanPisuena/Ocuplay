@@ -103,17 +103,27 @@ void Layouts::createLayoutImg() {
 	// !--PLACE HOLDER--!
 	// Will change soon
 	double px = 1000.0;
+	Magick::Color clr1(0.0, 0.0, 65535.0, 65535.0 * 0.5);
+	Magick::Color clr(0, 0, 65535);
 
 	// Initialize image object with size px, and background color of red
-	Magick::Image img(Magick::Geometry(px, px), Magick::Color("red"));
+	Magick::Image base(Magick::Geometry(px, px), Magick::Color("red")),
+		mask(Magick::Geometry(500.0, 500.0), clr1);
 
 	// Draws the microLayouts
-	for (double i = 0.0; i < px; i += (px/Layouts::width))
-		img.draw(Magick::DrawableLine(i, 0.0, i, px));
+	for (double i = 0.0; i < px; i += (px / Layouts::width))
+		base.draw(Magick::DrawableLine(i, 0.0, i, px));
+
 
 	for (double i = 0.0; i < px; i += (px /Layouts::height))
-		img.draw(Magick::DrawableLine(0.0, i, px, i));
+		base.draw(Magick::DrawableLine(0.0, i, px, i));
 
-	// Saves file as .bmp
-	img.write("img.bmp");
+	// Adds alpha mask 
+	mask.alpha(true);
+
+	// Draw mask over base
+	base.composite(mask, 0.0, 0.0, Magick::OverCompositeOp);
+
+	// Save as img0.png
+	base.write("img0.png");
 }
