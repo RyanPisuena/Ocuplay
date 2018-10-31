@@ -166,6 +166,9 @@ void Layouts::createLayoutImg(const std::string& s) {
 
 	// Draw mask over base
 	base.composite(mask, 0.0, 0.0, Magick::OverCompositeOp);
+	
+	// Lossless png
+	base.compressType(Magick::NoCompression);
 
 	// Save as img0.png
 	base.write(s);
