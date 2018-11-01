@@ -30,6 +30,7 @@ std::uniform_int_distribution<> dist(0, 65535);
 // Clean up variables
 // Do error checking
 // Document functions
+// ADD SHAPE READ
 
 
 // Function Parameters:
@@ -81,42 +82,47 @@ void Layouts::readLayout(const std::string &fileName)
 		stream >> std::dec >> data;
 		if (data == Layouts::fileNo)
 		{
-			std::size_t cellsHorizontal;
-			std::size_t cellsVertical;
-			std::size_t numOfLayouts;
+			std::size_t _HCELL;
+			std::size_t _VCELL;
+			std::size_t _NLAY;
 
 			// Get cellsHorizontal, cellsVertical and numOfLayouts
-			stream >> cellsHorizontal >> cellsVertical >> numOfLayouts;
+			stream >> _HCELL >> _VCELL >> _NLAY;
 		
 			// Store cellsHorizontal, cellsVertical and numOfLayouts to object
-			Layouts::cellsHorizontal = cellsHorizontal; 
-			Layouts::cellsVertical = cellsVertical; 
-			Layouts::numOfLayouts = numOfLayouts;
+			Layouts::cellsHorizontal = _HCELL; 
+			Layouts::cellsVertical = _VCELL; 
+			Layouts::numOfLayouts = _NLAY;
 
-			std::size_t point_x;
-			std::size_t point_y;
-			std::size_t _point_x;
-			std::size_t _point_y;
+			Layouts::LayoutCoords _COORDS;
 
 			// Store layout position
-			while (stream >> point_x >> point_y >> _point_x >> _point_y)
+			for (int i = 0; i < Layouts::numOfLayouts; i++)
 			{
-				Coordinates begin;
-				Coordinates end;
-				
-				LayoutCoords pair;
+				if (stream >> _COORDS.begin.x >> _COORDS.begin.y
+						   >> _COORDS.end.x   >> _COORDS.end.y)
+				{
+					// Push Layout position in list
+					Layouts::CoordinateLists.push_back(_COORDS);
+				}
+				else
+				{
+					// TODO: ERROR CHECK
+				}
+			}
 
-				begin.x = point_x;
-				begin.y = point_y;
+			// TODO: ADDED SHAPE READ
+			Layouts::Shape _SHAPE;
+			for (int i = 0; i < Layouts::numOfLayouts; i++)
+			{
+				if (stream >> _SHAPE.name >> _SHAPE.flags)
+				{
+					Layouts::ShapesList.push_back(_SHAPE);
+				}
+				else
+				{
 
-				end.x = _point_x;
-				end.y = _point_y;
-
-				pair.begin = begin;
-				pair.end = end;
-
-				// Push Layout position in list
-				Layouts::CoordinateList.push_back(pair);
+				}
 			}
 
 		} 
@@ -160,18 +166,29 @@ void Layouts::createLayoutImg(const std::string& fileName) {
 	// This will be for the mask.
 	// !-- Consider using one Magick::Image object instead of one --!
 	Magick::DrawableList layouts;
-
-	for (const LayoutCoords &s : Layouts::CoordinateList) 
+	
+	for (const LayoutCoords &s : Layouts::CoordinateLists) 
 	{
 		// Randomnizes color layouts
 		layouts.push_back(Magick::DrawableFillColor(Magick::Color(MagickCore::Quantum(dist(eng)), MagickCore::Quantum(dist(eng)), 
-													MagickCore::Quantum(dist(eng)), MagickCore::Quantum(65535 * 0.7))));
+													MagickCore::Quantum(dist(eng)), MagickCore::Quantum(65535 * 1.0))));
 
 		// Pushes layout to drawable list
 		layouts.push_back(Magick::DrawableRectangle((s.begin.x) * (Layouts::cellHeight), 
 													(s.begin.y) * (Layouts::cellWidth),
 													(s.end.x + 1) * (Layouts::cellHeight),
 													(s.end.y + 1) * (Layouts::cellWidth)));
+
+		layouts.push_back(Magick::DrawableFillColor(Magick::Color(MagickCore::Quantum(dist(eng)), MagickCore::Quantum(dist(eng)),
+			MagickCore::Quantum(dist(eng)), MagickCore::Quantum(65535.0 * /*(static_cast<double>(dist(eng) % 25) + 50.0) * 0.01 */ 1.0) )));
+
+		// Ellipse :-)
+		// HARDCODED
+		layouts.push_back(Magick::DrawableEllipse((s.end.x + 1 + s.begin.x) * (Layouts::cellWidth) / 2,
+												  (s.end.y + 1 + s.begin.y) * (Layouts::cellHeight)/ 2, 
+												  (s.end.x + 1 - s.begin.x) * (0.5) * Layouts::cellWidth, 
+												  (s.end.y + 1 - s.begin.y) * (0.5) * Layouts::cellHeight, 
+												  (dist(eng) + 45) % 360, dist(eng) % 360));
 	}
 	// Draw layouts
 	mask.draw(layouts);

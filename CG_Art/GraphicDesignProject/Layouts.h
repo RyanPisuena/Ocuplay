@@ -4,21 +4,34 @@
 #include <list>
 #include <string>
 
-struct Coordinates
-{
-	std::size_t x;
-	std::size_t y;
-};
-
-struct LayoutCoords 
-{
-	Coordinates begin;
-	Coordinates end;
-};
-
 class Layouts
 {
+public:
+	static const unsigned int fileNo;
+
+	Layouts();
+	~Layouts();
+
+	void readLayout(const std::string& fileName);
+
+	void createLayoutImg(const std::string& = "img0.png");
+
 private:
+	struct LayoutCoords
+	{
+		struct Coordinates
+		{
+			std::size_t x;
+			std::size_t y;
+		}begin, end;
+	};
+
+	struct Shape 
+	{
+		std::string name;
+		std::size_t flags;
+	};
+
 	// Cell height
 	float cellHeight;
 
@@ -34,17 +47,8 @@ private:
 	// Number of numOfLayouts
 	std::size_t numOfLayouts;
 
-	std::list<LayoutCoords> CoordinateList;
-
-public:
-	static const unsigned int fileNo;
-
-	Layouts();
-	~Layouts();
-	
-	void readLayout(const std::string& fileName);
-
-	void createLayoutImg(const std::string& = "img0.png");
+	std::list<Layouts::LayoutCoords> CoordinateLists;
+	std::list<Layouts::Shape> ShapesList;
 };
 
 #endif
