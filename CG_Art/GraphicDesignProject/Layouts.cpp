@@ -31,6 +31,7 @@ std::uniform_int_distribution<> dist(0, 65535);
 // Do error checking
 // Document functions
 // ADD SHAPE READ
+// Optimize features
 
 
 // Function Parameters:
@@ -70,7 +71,9 @@ void Layouts::readLayout(const std::string &fileName)
 		std::string temp;
 		// Reads formatted inputfile
 		while (getline(inputFile, temp))
+		{
 			stream << temp << std::endl;
+		}
 
 		// Removes comments in file.
 		// A valid comment must start on a newline with a '#'.
@@ -144,10 +147,13 @@ void Layouts::createLayoutImg(const std::string& fileName) {
 	float height = Layouts::cellHeight * Layouts::cellsHorizontal;
 
 	// Initialize image object with size, and background color of red
-	Magick::Image base(Magick::Geometry(MagickCore::Quantum(width), MagickCore::Quantum(height)), Magick::Color("red")),
-			mask(Magick::Geometry(MagickCore::Quantum(width), MagickCore::Quantum(height)), 
-			Magick::Color(std::size_t(0.0), std::size_t(0.0), std::size_t(0.0), std::size_t(0.0)
-			));
+	Magick::Image 
+		
+		base(Magick::Geometry(MagickCore::Quantum(width), MagickCore::Quantum(height)), Magick::Color("red")),
+			
+		
+		mask(Magick::Geometry(MagickCore::Quantum(width), MagickCore::Quantum(height)), 
+			Magick::Color(std::size_t(0.0), std::size_t(0.0), std::size_t(0.0), std::size_t(0.0)));
 
 	// Create a list of Drawable elements
 	Magick::DrawableList elements;
@@ -164,7 +170,6 @@ void Layouts::createLayoutImg(const std::string& fileName) {
 
 	// Create a list of drawable layouts
 	// This will be for the mask.
-	// !-- Consider using one Magick::Image object instead of one --!
 	Magick::DrawableList layouts;
 	
 	for (const LayoutCoords &s : Layouts::CoordinateLists) 
@@ -180,21 +185,22 @@ void Layouts::createLayoutImg(const std::string& fileName) {
 													(s.end.y + 1) * (Layouts::cellWidth)));
 
 		layouts.push_back(Magick::DrawableFillColor(Magick::Color(MagickCore::Quantum(dist(eng)), MagickCore::Quantum(dist(eng)),
-			MagickCore::Quantum(dist(eng)), MagickCore::Quantum(65535.0 * /*(static_cast<double>(dist(eng) % 25) + 50.0) * 0.01 */ 1.0) )));
+			MagickCore::Quantum(dist(eng)), MagickCore::Quantum(65535.0 * 1.0) )));
 
 		// Ellipse :-)
-		// HARDCODED
+		/*
 		layouts.push_back(Magick::DrawableEllipse((s.end.x + 1 + s.begin.x) * (Layouts::cellWidth) / 2,
 												  (s.end.y + 1 + s.begin.y) * (Layouts::cellHeight)/ 2, 
 												  (s.end.x + 1 - s.begin.x) * (0.5) * Layouts::cellWidth, 
 												  (s.end.y + 1 - s.begin.y) * (0.5) * Layouts::cellHeight, 
-												  (dist(eng) + 45) % 360, dist(eng) % 360));
+												  0, 360));
+												  */
 	}
 	// Draw layouts
 	mask.draw(layouts);
 
 	// Adds alpha mask 
-	mask.alpha(true);
+	//mask.alpha(true);
 
 	// Draw mask over base
 	base.composite(mask, std::size_t(0.0), std::size_t(0.0), Magick::OverCompositeOp);
