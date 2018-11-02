@@ -1,7 +1,7 @@
 #ifndef _LAYOUTS_H_
 #define _LAYOUTS_H_
 
-#include <list>
+#include <vector>
 #include <string>
 
 class Layouts
@@ -16,7 +16,7 @@ public:
 
 	void createLayoutImg(const std::string& = "img0.png");
 
-private:
+protected:
 	struct LayoutCoords
 	{
 		struct Coordinates
@@ -29,7 +29,7 @@ private:
 	struct Shape 
 	{
 		std::string name;
-		std::size_t flags;
+		int flags;
 	};
 
 	// Cell height
@@ -47,8 +47,8 @@ private:
 	// Number of numOfLayouts
 	std::size_t numOfLayouts;
 
-	std::list<Layouts::LayoutCoords> CoordinateLists;
-	std::list<Layouts::Shape> ShapesList;
+	std::vector<Layouts::LayoutCoords> CoordinateLists;
+	std::vector<Layouts::Shape> ShapesList;
 };
 
 #endif

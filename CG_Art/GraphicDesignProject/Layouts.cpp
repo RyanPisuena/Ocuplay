@@ -1,6 +1,6 @@
 ﻿/*
 LAYOUTS
-LAST EDITED: 10/31/2018
+LAST EDITED: 11/02/2018
 CONTRIBUTORS: CRISTIAN C., DOMINQUE M., GABRIEL F.
 PURPOSE: FILE IS TO CONTAIN LAYOUTS FOR DRAWING.
 */
@@ -10,6 +10,7 @@ PURPOSE: FILE IS TO CONTAIN LAYOUTS FOR DRAWING.
 #include <sstream>
 #include <fstream>
 
+#include <list>
 #include <regex>
 #include <random>
 
@@ -124,7 +125,9 @@ void Layouts::readLayout(const std::string &fileName)
 				}
 				else
 				{
-
+					_SHAPE.name = "NONE";
+					_SHAPE.flags = 0;
+					Layouts::ShapesList.push_back(_SHAPE);
 				}
 			}
 
@@ -172,29 +175,47 @@ void Layouts::createLayoutImg(const std::string& fileName) {
 	// This will be for the mask.
 	Magick::DrawableList layouts;
 	
-	for (const LayoutCoords &s : Layouts::CoordinateLists) 
+
+	for (int i = 0; i < Layouts::numOfLayouts; i++)
 	{
 		// Randomnizes color layouts
 		layouts.push_back(Magick::DrawableFillColor(Magick::Color(MagickCore::Quantum(dist(eng)), MagickCore::Quantum(dist(eng)), 
 													MagickCore::Quantum(dist(eng)), MagickCore::Quantum(65535 * 1.0))));
 
 		// Pushes layout to drawable list
-		layouts.push_back(Magick::DrawableRectangle((s.begin.x) * (Layouts::cellHeight), 
-													(s.begin.y) * (Layouts::cellWidth),
-													(s.end.x + 1) * (Layouts::cellHeight),
-													(s.end.y + 1) * (Layouts::cellWidth)));
+		layouts.push_back(Magick::DrawableRectangle((Layouts::CoordinateLists[i].begin.x) * (Layouts::cellHeight), 
+													(Layouts::CoordinateLists[i].begin.y) * (Layouts::cellWidth),
+													(Layouts::CoordinateLists[i].end.x + 1) * (Layouts::cellHeight),
+													(Layouts::CoordinateLists[i].end.y + 1) * (Layouts::cellWidth)));
 
-		layouts.push_back(Magick::DrawableFillColor(Magick::Color(MagickCore::Quantum(dist(eng)), MagickCore::Quantum(dist(eng)),
-			MagickCore::Quantum(dist(eng)), MagickCore::Quantum(65535.0 * 1.0) )));
 
-		// Ellipse :-)
-		/*
-		layouts.push_back(Magick::DrawableEllipse((s.end.x + 1 + s.begin.x) * (Layouts::cellWidth) / 2,
-												  (s.end.y + 1 + s.begin.y) * (Layouts::cellHeight)/ 2, 
-												  (s.end.x + 1 - s.begin.x) * (0.5) * Layouts::cellWidth, 
-												  (s.end.y + 1 - s.begin.y) * (0.5) * Layouts::cellHeight, 
-												  0, 360));
-												  */
+		// Insert shape inside mini-layout if any
+		if (Layouts::ShapesList[i].name == "ELLIPSE")
+		{
+			layouts.push_back(Magick::DrawableFillColor(Magick::Color(MagickCore::Quantum(dist(eng)), MagickCore::Quantum(dist(eng)),
+				MagickCore::Quantum(dist(eng)), MagickCore::Quantum(65535.0 * 1.0))));
+
+			layouts.push_back(Magick::DrawableEllipse((Layouts::CoordinateLists[i].end.x + 1 + Layouts::CoordinateLists[i].begin.x) * (Layouts::cellWidth) * 0.5,
+				(Layouts::CoordinateLists[i].end.y + 1 + Layouts::CoordinateLists[i].begin.y) * (Layouts::cellHeight) * 0.5, 
+				(Layouts::CoordinateLists[i].end.x + 1 - Layouts::CoordinateLists[i].begin.x) * (0.5) * Layouts::cellWidth,
+				(Layouts::CoordinateLists[i].end.y + 1 - Layouts::CoordinateLists[i].begin.y) * (0.5) * Layouts::cellHeight,
+				0, 360));
+
+		}
+		else if (Layouts::ShapesList[i].name == "TRIANGLE")
+		{
+			/*
+			layouts.push_back(Magick::DrawableFillColor(Magick::Color(MagickCore::Quantum(dist(eng)), MagickCore::Quantum(dist(eng)),
+				MagickCore::Quantum(dist(eng)), MagickCore::Quantum(65535.0 * 1.0))));
+			
+			Magick::CoordinateList a;
+
+			a.push_back(Magick::Coordinate((Layouts::CoordinateLists[i].end.x + 1 - Layouts::CoordinateLists[i].begin.x) * (0.5) * Layouts::cellWidth),
+				(Layouts::CoordinateLists[i].end.y + 1 - Layouts::CoordinateLists[i].begin.y) * (0.5) * Layouts::cellHeight);
+
+			layouts.push_back(Magick::DrawablePolygon(a));
+			*/
+		}
 	}
 	// Draw layouts
 	mask.draw(layouts);
