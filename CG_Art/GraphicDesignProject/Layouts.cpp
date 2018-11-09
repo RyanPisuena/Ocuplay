@@ -1,19 +1,15 @@
 ﻿/*
 LAYOUTS
-LAST EDITED: 11/02/2018
+LAST EDITED: 10/31/2018
 CONTRIBUTORS: CRISTIAN C., DOMINQUE M., GABRIEL F.
 PURPOSE: FILE IS TO CONTAIN LAYOUTS FOR DRAWING.
 */
 #include "Layouts.h"
-
 #include <iostream>
 #include <sstream>
 #include <fstream>
-
-#include <list>
 #include <regex>
 #include <random>
-
 #include <Magick++.h>
 
 unsigned const int Layouts::fileNo = 13572468;
@@ -45,7 +41,7 @@ Layouts::Layouts()
 
 	Layouts::cellsHorizontal = 0;
 	Layouts::cellsVertical = 0;
-	
+
 	Layouts::numOfLayouts = 0;
 }
 
@@ -59,13 +55,11 @@ Layouts::~Layouts()
 // Function Parameters:
 // Function Description:
 void Layouts::readLayout(const std::string &fileName)
-{                                                                                                                                                                                                                                                                     
+{
 	std::ifstream inputFile(fileName);
 
-	if (!inputFile) 
-	{
-		// TODO: ERROR MSG
-	}
+	if (!inputFile)
+		namespace::cout << " no file found." << endl;
 	else
 	{
 		std::stringstream stream;
@@ -86,16 +80,16 @@ void Layouts::readLayout(const std::string &fileName)
 		stream >> std::dec >> data;
 		if (data == Layouts::fileNo)
 		{
-			std::size_t _HCELL;
-			std::size_t _VCELL;
-			std::size_t _NLAY;
+			std::size_t _HCELL; // initialize horizontal
+			std::size_t _VCELL; // initialize vertical
+			std::size_t _NLAY; // initialize number of layouts
 
 			// Get cellsHorizontal, cellsVertical and numOfLayouts
 			stream >> _HCELL >> _VCELL >> _NLAY;
-		
-			// Store cellsHorizontal, cellsVertical and numOfLayouts to object
-			Layouts::cellsHorizontal = _HCELL; 
-			Layouts::cellsVertical = _VCELL; 
+
+			// Sets cellsHorizontal, cellsVertical and numOfLayouts to object
+			Layouts::cellsHorizontal = _HCELL;
+			Layouts::cellsVertical = _VCELL;
 			Layouts::numOfLayouts = _NLAY;
 
 			Layouts::LayoutCoords _COORDS;
@@ -105,10 +99,8 @@ void Layouts::readLayout(const std::string &fileName)
 			{
 				if (stream >> _COORDS.begin.x >> _COORDS.begin.y
 						   >> _COORDS.end.x   >> _COORDS.end.y)
-				{
 					// Push Layout position in list
 					Layouts::CoordinateLists.push_back(_COORDS);
-				}
 				else
 				{
 					// TODO: ERROR CHECK
@@ -120,22 +112,17 @@ void Layouts::readLayout(const std::string &fileName)
 			for (int i = 0; i < Layouts::numOfLayouts; i++)
 			{
 				if (stream >> _SHAPE.name >> _SHAPE.flags)
-				{
 					Layouts::ShapesList.push_back(_SHAPE);
-				}
 				else
 				{
-					_SHAPE.name = "NONE";
-					_SHAPE.flags = 0;
-					Layouts::ShapesList.push_back(_SHAPE);
+
 				}
 			}
 
-		} 
-		else
-		{
-			// TODO: ERROR MSG
 		}
+		else
+			// TODO: ERROR MSG
+			namespace::cout << "Error message" << endl;
 	}
 
 	// Close file after all operations are done.
@@ -150,12 +137,12 @@ void Layouts::createLayoutImg(const std::string& fileName) {
 	float height = Layouts::cellHeight * Layouts::cellsHorizontal;
 
 	// Initialize image object with size, and background color of red
-	Magick::Image 
-		
+	Magick::Image
+
 		base(Magick::Geometry(MagickCore::Quantum(width), MagickCore::Quantum(height)), Magick::Color("red")),
-			
-		
-		mask(Magick::Geometry(MagickCore::Quantum(width), MagickCore::Quantum(height)), 
+
+
+		mask(Magick::Geometry(MagickCore::Quantum(width), MagickCore::Quantum(height)),
 			Magick::Color(std::size_t(0.0), std::size_t(0.0), std::size_t(0.0), std::size_t(0.0)));
 
 	// Create a list of Drawable elements
@@ -174,58 +161,40 @@ void Layouts::createLayoutImg(const std::string& fileName) {
 	// Create a list of drawable layouts
 	// This will be for the mask.
 	Magick::DrawableList layouts;
-	
 
-	for (int i = 0; i < Layouts::numOfLayouts; i++)
+	for (const LayoutCoords &s : Layouts::CoordinateLists)
 	{
 		// Randomnizes color layouts
-		layouts.push_back(Magick::DrawableFillColor(Magick::Color(MagickCore::Quantum(dist(eng)), MagickCore::Quantum(dist(eng)), 
+		layouts.push_back(Magick::DrawableFillColor(Magick::Color(MagickCore::Quantum(dist(eng)), MagickCore::Quantum(dist(eng)),
 													MagickCore::Quantum(dist(eng)), MagickCore::Quantum(65535 * 1.0))));
 
 		// Pushes layout to drawable list
-		layouts.push_back(Magick::DrawableRectangle((Layouts::CoordinateLists[i].begin.x) * (Layouts::cellHeight), 
-													(Layouts::CoordinateLists[i].begin.y) * (Layouts::cellWidth),
-													(Layouts::CoordinateLists[i].end.x + 1) * (Layouts::cellHeight),
-													(Layouts::CoordinateLists[i].end.y + 1) * (Layouts::cellWidth)));
+		layouts.push_back(Magick::DrawableRectangle((s.begin.x) * (Layouts::cellHeight),
+													(s.begin.y) * (Layouts::cellWidth),
+													(s.end.x + 1) * (Layouts::cellHeight),
+													(s.end.y + 1) * (Layouts::cellWidth)));
 
+		layouts.push_back(Magick::DrawableFillColor(Magick::Color(MagickCore::Quantum(dist(eng)), MagickCore::Quantum(dist(eng)),
+			MagickCore::Quantum(dist(eng)), MagickCore::Quantum(65535.0 * 1.0) )));
 
-		// Insert shape inside mini-layout if any
-		if (Layouts::ShapesList[i].name == "ELLIPSE")
-		{
-			layouts.push_back(Magick::DrawableFillColor(Magick::Color(MagickCore::Quantum(dist(eng)), MagickCore::Quantum(dist(eng)),
-				MagickCore::Quantum(dist(eng)), MagickCore::Quantum(65535.0 * 1.0))));
-
-			layouts.push_back(Magick::DrawableEllipse((Layouts::CoordinateLists[i].end.x + 1 + Layouts::CoordinateLists[i].begin.x) * (Layouts::cellWidth) * 0.5,
-				(Layouts::CoordinateLists[i].end.y + 1 + Layouts::CoordinateLists[i].begin.y) * (Layouts::cellHeight) * 0.5, 
-				(Layouts::CoordinateLists[i].end.x + 1 - Layouts::CoordinateLists[i].begin.x) * (0.5) * Layouts::cellWidth,
-				(Layouts::CoordinateLists[i].end.y + 1 - Layouts::CoordinateLists[i].begin.y) * (0.5) * Layouts::cellHeight,
-				0, 360));
-
-		}
-		else if (Layouts::ShapesList[i].name == "TRIANGLE")
-		{
-			/*
-			layouts.push_back(Magick::DrawableFillColor(Magick::Color(MagickCore::Quantum(dist(eng)), MagickCore::Quantum(dist(eng)),
-				MagickCore::Quantum(dist(eng)), MagickCore::Quantum(65535.0 * 1.0))));
-			
-			Magick::CoordinateList a;
-
-			a.push_back(Magick::Coordinate((Layouts::CoordinateLists[i].end.x + 1 - Layouts::CoordinateLists[i].begin.x) * (0.5) * Layouts::cellWidth),
-				(Layouts::CoordinateLists[i].end.y + 1 - Layouts::CoordinateLists[i].begin.y) * (0.5) * Layouts::cellHeight);
-
-			layouts.push_back(Magick::DrawablePolygon(a));
-			*/
-		}
+		// Ellipse :-)
+		/*
+		layouts.push_back(Magick::DrawableEllipse((s.end.x + 1 + s.begin.x) * (Layouts::cellWidth) / 2,
+												  (s.end.y + 1 + s.begin.y) * (Layouts::cellHeight)/ 2,
+												  (s.end.x + 1 - s.begin.x) * (0.5) * Layouts::cellWidth,
+												  (s.end.y + 1 - s.begin.y) * (0.5) * Layouts::cellHeight,
+												  0, 360));
+												  */
 	}
 	// Draw layouts
 	mask.draw(layouts);
 
-	// Adds alpha mask 
+	// Adds alpha mask
 	//mask.alpha(true);
 
 	// Draw mask over base
 	base.composite(mask, std::size_t(0.0), std::size_t(0.0), Magick::OverCompositeOp);
-	
+
 	// Lossless png
 	base.compressType(Magick::NoCompression);
 
