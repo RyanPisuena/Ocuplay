@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include <QtWidgets/QApplication>
 
+ // driver file
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);

@@ -53,6 +53,7 @@ Layouts::~Layouts()
 }
 
 // Function Parameters:
+// pass file name
 // Function Description:
 void Layouts::readLayout(const std::string &fileName)
 {
@@ -130,6 +131,7 @@ void Layouts::readLayout(const std::string &fileName)
 }
 
 // Function Parameters:
+// Pass filename to the function
 // Function Description:
 void Layouts::createLayoutImg(const std::string& fileName) {
 
@@ -164,7 +166,7 @@ void Layouts::createLayoutImg(const std::string& fileName) {
 
 	for (const LayoutCoords &s : Layouts::CoordinateLists)
 	{
-		// Randomnizes color layouts
+		// Randomizes color layouts
 		layouts.push_back(Magick::DrawableFillColor(Magick::Color(MagickCore::Quantum(dist(eng)), MagickCore::Quantum(dist(eng)),
 													MagickCore::Quantum(dist(eng)), MagickCore::Quantum(65535 * 1.0))));
 

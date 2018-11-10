@@ -4,10 +4,6 @@
 #include <list>
 #include <string>
 
-//
-//
-//
-//
 class Layouts
 {
 public:
@@ -21,6 +17,9 @@ public:
 	void createLayoutImg(const std::string& = "img0.png");
 
 private:
+	// PixelPixelCache* = get(cellWidth, cellHeight, cellsHorizontal, cellsVertical);
+	//Pixel pixelCache;
+	//pixelCache.get(cellWidth, cellHeight, cellsHorizontal, cellsVertical);
 	struct LayoutCoords
 	{
 		struct Coordinates
@@ -28,12 +27,6 @@ private:
 			std::size_t x; // defines x-coordinate
 			std::size_t y; // defines y-coordinate
 		}begin, end;
-	};
-
-	struct Shape
-	{
-		std::string name;
-		std::size_t flags;
 	};
 
 	// Cell height
@@ -52,7 +45,7 @@ private:
 	std::size_t numOfLayouts;
 
 	std::list<Layouts::LayoutCoords> CoordinateLists; // List data structure storing coordinates
-	std::list<Layouts::Shape> ShapesList; // List data structure storing the shapes
+
 };
 
 #endif
