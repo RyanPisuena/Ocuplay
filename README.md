@@ -7,9 +7,9 @@ Steve Schlesinger
 ## Fab Friday Team Members
 |Name             |Role            |Secondary Role          |
 |:---------------:|:--------------:|:----------------------:|
-|Ace Figueroa     |Lead QA         |Senior Developer        |
-|Ryan Pisuena     |Project Manager |Quality Assurance Tester|
-|Cristian Cisneros|Developer       |Quality Assurance Tester|
+|Ace Figueroa     |Project Manager |Senior Developer        |
+|Ryan Pisuena     |Lead QA         |Developer               |
+|Cristian Cisneros|Junior Developer|Quality Assurance Tester|
 |Esmerelda Urena  |Senior Developer|Quality Assurance Tester|
 |Dominiq Martinez |Junior Developer|Quality Assurance Tester|
 
